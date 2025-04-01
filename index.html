@@ -3,21 +3,45 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>스타벅스 기프티콘</title>
+    <title>기프티콘</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y0VLB48LJ1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <style>
+      /*  애니메이션 */
+      .scatter-out {
+        animation: scatter 1s forwards ease-in;
+      }
 
-  gtag('config', 'G-Y0VLB48LJ1');
-</script>
+      @keyframes scatter {
+        0% {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+          filter: blur(0px);
+        }
+        100% {
+          opacity: 0;
+          transform: scale(0.2) translateY(-100px) rotate(20deg);
+          filter: blur(4px);
+        }
+      }
+
+      .fade-in {
+        animation: fadeIn 1s ease-out forwards;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+    </style>
   </head>
   <body class="bg-yellow-50 min-h-screen flex flex-col items-center p-4">
     <div class="w-full max-w-md bg-white rounded-xl shadow-lg overflow-hidden">
-      <!-- 상단 프로필 영역 -->
       <div class="relative p-4 bg-gradient-to-br from-yellow-200 to-pink-200">
         <img
           src="https://st.kakaocdn.net/commerce_ui/assets/gift/inbox_detail/fools_bgdeco.png"
@@ -42,7 +66,6 @@
         </button>
       </div>
 
-      <!-- 선물 이미지 및 내용 -->
       <div
         id="gift-content"
         class="p-6 flex flex-col items-center space-y-4 transition-all duration-500"
@@ -53,28 +76,26 @@
           alt="선물 이미지"
           class="w-48 rounded-lg shadow-md"
         />
-        <div class="text-center">
+        <div class="text-center" id="gift-details">
           <div class="text-sm text-gray-500">스타벅스</div>
           <div class="text-lg font-bold">아이스 카페 아메리카노 T</div>
-          <div class="mt-2 text-gray-700">
-            유효기간: <strong>2025년 8월 8일</strong><br />
-            주문번호: 88723388
-          </div>
-          <!-- 가짜 바코드 -->
+          <div class="mt-2 text-gray-700" id="expire-date">유효기간:</div>
+          <div class="mt-2 text-gray-700" id="order-number">주문번호:</div>
           <div class="mt-4">
-            <div class="text-center font-mono text-lg tracking-widest">
-              1234 5678 9012 3456
-            </div>
+            <div
+              id="barcode-text"
+              class="text-center font-mono text-lg tracking-widest"
+            ></div>
             <img
-              src="https://www.barcodesinc.com/generator/image.php?code=1234567890123456&style=197&type=C128B&width=300&height=80&xres=1&font=3"
+              id="barcode-img"
+              src=""
               alt="바코드"
-              class="mt-1 mx-auto"
+              class="mt-1 mx-auto hidden"
             />
           </div>
         </div>
       </div>
 
-      <!-- 하단 바 -->
       <div
         class="flex justify-between border-t text-white bg-gray-800 text-center text-sm"
       >
@@ -87,16 +108,47 @@
       </div>
     </div>
 
-    <!-- 스크립트 영역 -->
     <script>
-      const imageUrl =
+      function generateRandom16DigitNumber() {
+        let number = "";
+        for (let i = 0; i < 16; i++) {
+          number += Math.floor(Math.random() * 10);
+        }
+        return number;
+      }
+
+      // 랜덤 번호 & 포맷
+      const barcodeNumber = generateRandom16DigitNumber();
+      const formatted = barcodeNumber.replace(/(.{4})/g, "$1 ").trim();
+      document.getElementById("order-number").textContent =
+        "주문번호: " + barcodeNumber;
+      document.getElementById("barcode-text").textContent = formatted;
+
+      const barcodeImg = document.getElementById("barcode-img");
+      barcodeImg.onload = () => {
+        barcodeImg.classList.remove("hidden");
+      };
+      barcodeImg.src =
+        "https://www.barcodesinc.com/generator/image.php?code=" +
+        barcodeNumber +
+        "&style=197&type=C128B&width=300&height=80&xres=1&font=3";
+
+      const nextYear = new Date().getFullYear() + 1;
+      document.getElementById("expire-date").innerHTML =
+        "유효기간: <strong>" + nextYear + "년 8월 8일</strong>";
+
+      document.getElementById("coffee-img").src =
         "https://img1.kakaocdn.net/thumb/C320x320@2x.fwebp.q82/?fname=https%3A%2F%2Fst.kakaocdn.net%2Fproduct%2Fgift%2Fproduct%2F20231010111814_9a667f9eccc943648797925498bdd8a3.jpg";
-      document.getElementById("coffee-img").src = imageUrl;
 
       setTimeout(() => {
-        const giftContent = document.getElementById("gift-content");
-        giftContent.innerHTML =
-          '<div class="text-2xl font-bold text-red-500">뻥이지롱~</div>';
+        const details = document.getElementById("gift-details");
+        details.classList.add("scatter-out");
+
+        setTimeout(() => {
+          const giftContent = document.getElementById("gift-content");
+          giftContent.innerHTML =
+            '<div class="text-2xl font-bold text-red-500 fade-in">뻥이지롱~~</div>';
+        }, 1000); //
       }, 3000);
     </script>
   </body>
