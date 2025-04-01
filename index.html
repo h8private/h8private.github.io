@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>스타벅스 기프티콘</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-yellow-50 min-h-screen flex flex-col items-center p-4">
+    <div class="w-full max-w-md bg-white rounded-xl shadow-lg overflow-hidden">
+      <!-- 상단 프로필 영역 -->
+      <div class="relative p-4 bg-gradient-to-br from-yellow-200 to-pink-200">
+        <img
+          src="https://st.kakaocdn.net/commerce_ui/assets/gift/inbox_detail/fools_bgdeco.png"
+          alt="배경 데코"
+          class="absolute top-0 right-0 w-20 opacity-50"
+        />
+        <div class="flex items-center space-x-3 z-10 relative">
+          <img
+            src="gift.png"
+            alt="프로필 이미지"
+            class="w-12 h-12 rounded-full border"
+          />
+          <div>
+            <div class="text-lg font-bold">기프티콘 선물</div>
+          </div>
+        </div>
+        <button
+          onclick="alert('뻥이야 ~')"
+          class="mt-4 bg-yellow-300 hover:bg-yellow-400 text-black text-sm px-4 py-2 rounded-full font-semibold"
+        >
+          메시지카드
+        </button>
+      </div>
+
+      <!-- 선물 이미지 및 내용 -->
+      <div
+        id="gift-content"
+        class="p-6 flex flex-col items-center space-y-4 transition-all duration-500"
+      >
+        <img
+          id="coffee-img"
+          src=""
+          alt="선물 이미지"
+          class="w-48 rounded-lg shadow-md"
+        />
+        <div class="text-center">
+          <div class="text-sm text-gray-500">스타벅스</div>
+          <div class="text-lg font-bold">아이스 카페 아메리카노 T</div>
+          <div class="mt-2 text-gray-700">
+            유효기간: <strong>2025년 12월 3일</strong><br />
+            주문번호: 88723388
+          </div>
+          <!-- 가짜 바코드 -->
+          <div class="mt-4">
+            <div class="text-center font-mono text-lg tracking-widest">
+              1234 5678 9012 3456
+            </div>
+            <img
+              src="https://www.barcodesinc.com/generator/image.php?code=1234567890123456&style=197&type=C128B&width=300&height=80&xres=1&font=3"
+              alt="바코드"
+              class="mt-1 mx-auto"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- 하단 바 -->
+      <div
+        class="flex justify-between border-t text-white bg-gray-800 text-center text-sm"
+      >
+        <button onclick="alert('뻥이야 ~')" class="w-full py-3 border-r">
+          취소/환불
+        </button>
+        <button onclick="alert('뻥이야 ~')" class="w-full py-3">
+          기간 연장
+        </button>
+      </div>
+    </div>
+
+    <!-- 스크립트 영역 -->
+    <script>
+      const imageUrl =
+        "https://img1.kakaocdn.net/thumb/C320x320@2x.fwebp.q82/?fname=https%3A%2F%2Fst.kakaocdn.net%2Fproduct%2Fgift%2Fproduct%2F20231010111814_9a667f9eccc943648797925498bdd8a3.jpg";
+      document.getElementById("coffee-img").src = imageUrl;
+
+      setTimeout(() => {
+        const giftContent = document.getElementById("gift-content");
+        giftContent.innerHTML =
+          '<div class="text-2xl font-bold text-red-500">뻥이지롱~</div>';
+      }, 3000);
+    </script>
+  </body>
+</html>
